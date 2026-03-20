@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+# Le notebook monolithique original (remplacé par main.py + modules)
+/main.ipynb
+# Les notebooks EDA dans notebooks/ SONT versionnés
+
+# Data — ne jamais versionner les données
+data/
+*.csv
+*.parquet
+*.h5
+*.hdf5
+
+# Models — ne jamais versionner les modèles sérialisés
+models/
+*.pkl
+*.joblib
+*.h5
+*.keras
+*.onnx
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Environment & secrets
+.env
+*.env
+configs/secrets.yaml
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Docker
+*.log
+
+# Distribution
+*.tar.gz
+*.whl

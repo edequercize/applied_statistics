@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.git/
+.gitignore
+*.ipynb
+notebooks/
+data/
+mlruns/
+tests/
+.github/
+README.md
+LICENSE
+*.md
