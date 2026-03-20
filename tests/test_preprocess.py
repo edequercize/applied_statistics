@@ -2,7 +2,6 @@
 
 import numpy as np
 import pandas as pd
-import pytest
 
 from src.data.preprocess import (
     add_basic_features,
@@ -11,7 +10,6 @@ from src.data.preprocess import (
     split_data,
 )
 from src.models.evaluate import mae_ordinale
-from src.utils import ORDINAL_MAPPING, coral_decode, coral_encode
 
 
 # ── Tests preprocessing ─────────────────────────────────────────────────────
@@ -87,28 +85,3 @@ class TestMaeOrdinale:
     def test_numeric_inputs(self):
         assert mae_ordinale([0, 1, 2], [0, 1, 2]) == 0.0
         assert mae_ordinale([0, 0, 0], [3, 3, 3]) == 3.0
-
-
-# ── Tests CORAL ──────────────────────────────────────────────────────────────
-
-
-class TestCoral:
-    def test_encode_shape(self):
-        y = np.array([0, 3, 6])
-        encoded = coral_encode(y, n_classes=7)
-        assert encoded.shape == (3, 6)
-
-    def test_encode_values(self):
-        # Classe 0 → [0,0,0,0,0,0]
-        # Classe 3 → [1,1,1,0,0,0]
-        # Classe 6 → [1,1,1,1,1,1]
-        y = np.array([0, 3, 6])
-        encoded = coral_encode(y, n_classes=7)
-        np.testing.assert_array_equal(encoded[0], [0, 0, 0, 0, 0, 0])
-        np.testing.assert_array_equal(encoded[1], [1, 1, 1, 0, 0, 0])
-        np.testing.assert_array_equal(encoded[2], [1, 1, 1, 1, 1, 1])
-
-    def test_decode(self):
-        proba = np.array([[0.9, 0.8, 0.7, 0.3, 0.1, 0.05]])
-        result = coral_decode(proba, threshold=0.5)
-        assert result[0] == 3

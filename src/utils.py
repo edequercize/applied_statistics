@@ -1,6 +1,5 @@
 """Constantes et fonctions utilitaires partagées."""
 
-import numpy as np
 import yaml
 
 
@@ -25,19 +24,3 @@ def load_config(path: str = "configs/params.yaml") -> dict:
     """Charge le fichier de configuration YAML."""
     with open(path, encoding="utf-8") as f:
         return yaml.safe_load(f)
-
-
-# ── Encodage CORAL ───────────────────────────────────────────────────────────
-
-def coral_encode(y, n_classes: int = 7) -> np.ndarray:
-    """Encode des labels ordinaux (0…K-1) en matrice binaire CORAL (n, K-1).
-
-    Pour chaque échantillon, les colonnes j < label valent 1, les autres 0.
-    """
-    y = np.asarray(y)
-    return np.greater_equal.outer(y, np.arange(1, n_classes)).astype("float32")
-
-
-def coral_decode(proba: np.ndarray, threshold: float = 0.5) -> np.ndarray:
-    """Convertit les probabilités CORAL en classes prédites."""
-    return (proba > threshold).sum(axis=1)
