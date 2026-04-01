@@ -8,6 +8,7 @@ Usage
 
 import argparse
 import logging
+from pathlib import Path
 
 import joblib
 import mlflow
@@ -86,7 +87,9 @@ def run_experiment(config: dict):
 
         # Sauvegarde du modèle
         mlflow.sklearn.log_model(grid.best_estimator_, "model")
-        joblib.dump(grid.best_estimator_, "models/best_model.joblib")
+        model_path = Path("models/best_model.joblib")
+        model_path.parent.mkdir(parents=True, exist_ok=True)
+        joblib.dump(grid.best_estimator_, model_path)
         logger.info("✅ LightGBM — terminé. Modèle sauvegardé dans models/best_model.joblib")
 
 
