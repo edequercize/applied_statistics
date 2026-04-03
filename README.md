@@ -59,7 +59,7 @@ Placer le fichier CSV dans `data/` :
 data/ObesityDataSet_raw_and_data_sinthetic.csv
 ```
 
-> ⚠️ Les données ne sont pas versionnées (voir `.gitignore`).
+> Les données ne sont pas versionnées (voir `.gitignore`).
 
 ## Utilisation
 
