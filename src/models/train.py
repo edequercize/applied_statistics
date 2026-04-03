@@ -1,7 +1,7 @@
 from lightgbm import LGBMClassifier
+from sklearn.metrics import make_scorer
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import make_scorer
 
 from src.models.evaluate import mae_ordinale
 

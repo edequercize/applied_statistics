@@ -66,7 +66,7 @@ def predict(patient: PatientFeatures):
         pred_value = prediction[0]
 
         # Gestion selon le type de modèle (ordinal int ou label string)
-        if isinstance(pred_value, (int, float)):
+        if isinstance(pred_value, int | float):
             pred_ord = int(pred_value)
             pred_label = INVERSE_MAPPING.get(pred_ord, f"unknown_{pred_ord}")
         else:
