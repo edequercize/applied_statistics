@@ -40,7 +40,7 @@ def load_model():
         model = joblib.load(MODEL_PATH)
         logger.info("Modèle chargé depuis %s", MODEL_PATH)
     except FileNotFoundError:
-        logger.warning("⚠️ Modèle non trouvé à %s — l'API démarrera sans modèle.", MODEL_PATH)
+        logger.warning("! Modèle non trouvé à %s — l'API démarrera sans modèle.", MODEL_PATH)
 
 
 # ── Endpoints ────────────────────────────────────────────────────────────────
