@@ -23,24 +23,17 @@ ENV/
 
 # Jupyter
 .ipynb_checkpoints/
-# Le notebook monolithique original (remplacé par main.py + modules)
 /main.ipynb
-# Les notebooks EDA dans notebooks/ SONT versionnés
 
 # Data — ne jamais versionner les données
-data/
+data/*.csv
 *.csv
 *.parquet
 *.h5
 *.hdf5
 
 # Models — ne jamais versionner les modèles sérialisés
-models/
-*.pkl
-*.joblib
-*.h5
-*.keras
-*.onnx
+models/*.joblib
 
 # MLflow
 mlruns/

@@ -3,7 +3,7 @@
 # ============================================================
 
 data:
-  path: "data/ObesityDataSet_raw_and_data_sinthetic.csv"
+  path: "src/data/ObesityDataSet_raw_and_data_sinthetic.csv"
   target: "NObeyesdad"
   test_size: 0.2
   random_state: 42

@@ -1,6 +1,7 @@
 """Tests unitaires pour le module de preprocessing."""
 
 import pandas as pd
+
 from src.data.preprocess import (
     add_basic_features,
     build_preprocessor,
