@@ -15,6 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ src/
 COPY api/ api/
 COPY configs/ configs/
+COPY models/ models/ 
 
 # Port exposé
 EXPOSE 8000
