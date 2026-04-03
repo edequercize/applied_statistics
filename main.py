@@ -13,7 +13,6 @@ from pathlib import Path
 import joblib
 import mlflow
 import mlflow.sklearn
-
 from src.data.load import load_data
 from src.data.preprocess import (
     build_preprocessor,
@@ -22,6 +21,7 @@ from src.data.preprocess import (
 )
 from src.models.evaluate import log_evaluation, plot_confusion_matrix
 from src.models.train import train_lightgbm
+
 from src.utils import ORDINAL_MAPPING, load_config
 
 logging.basicConfig(

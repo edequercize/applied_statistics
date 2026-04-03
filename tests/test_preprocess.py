@@ -1,8 +1,6 @@
 """Tests unitaires pour le module de preprocessing."""
 
-import numpy as np
 import pandas as pd
-
 from src.data.preprocess import (
     add_basic_features,
     build_preprocessor,
@@ -10,7 +8,6 @@ from src.data.preprocess import (
     split_data,
 )
 from src.models.evaluate import mae_ordinale
-
 
 # ── Tests preprocessing ─────────────────────────────────────────────────────
 
