@@ -2,7 +2,6 @@
 
 import yaml
 
-
 # ── Mapping ordinal des classes ──────────────────────────────────────────────
 
 ORDINAL_MAPPING = {
