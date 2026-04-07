@@ -1,10 +1,9 @@
-FROM python:3.11-slim
-
+FROM python:3.11-slim-bookworm
 WORKDIR /app
 
-# Dépendances système
+# LightGBM runtime dependency
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
+    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Installation des dépendances Python
@@ -15,7 +14,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ src/
 COPY api/ api/
 COPY configs/ configs/
-COPY models/ models/ 
 
 # Port exposé
 EXPOSE 8000

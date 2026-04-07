@@ -1,4 +1,4 @@
-# 🏥 Obesity Risk Classification — MLOps Project
+# Obesity Risk Classification — MLOps Project
 
 ## Contexte
 
@@ -95,8 +95,10 @@ Puis ouvrir http://localhost:5000 pour visualiser les runs.
 
 ```bash
 docker build -t obesity-api .
-docker run -p 8000:8000 obesity-api
+python main.py
+docker run -p 8000:8000 -v $(pwd)/models:/app/models obesity-api
 ```
+And to view : http://localhost:8000/docs on safari
 
 ## Licence
 
