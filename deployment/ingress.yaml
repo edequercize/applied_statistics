@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: obesity-ingress
+  annotations:
+    # Indispensable pour que des applications web (React/Vue) puissent appeler ton API
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Authorization, Content-Type"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    # REMPLACER par l'URL de ton choix (ex: obesity-api-prenom.lab.sspcloud.fr)
+    - obesity-api-test.lab.sspcloud.fr
+  rules:
+  - host: obesity-api-test.lab.sspcloud.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            # DOIT correspondre exactement au 'name' dans service.yaml
+            name: obesity-service
+            port:
+              number: 80

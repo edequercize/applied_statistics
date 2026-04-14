@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: obesity-deployment
+  labels:
+    app: obesity-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: obesity-api
+  template:
+    metadata:
+      labels:
+        app: obesity-api
+    spec:
+      containers:
+      - name: obesity-container
+        image: ashxivy/obesity-app:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MODEL_PATH
+          value: "models/best_model.joblib"
+        - name: JETON_API
+          valueFrom:
+            secretKeyRef:
+              name: api-jeton
+              key: JETON_API
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
