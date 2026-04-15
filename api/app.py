@@ -2,6 +2,7 @@
 
 import logging
 import os
+from pathlib import Path
 
 import joblib
 import pandas as pd
@@ -32,13 +33,38 @@ MODEL_PATH = os.getenv("MODEL_PATH", "models/best_model.joblib")
 model = None
 
 
+def _download_model_from_s3(s3_url: str, dest: Path) -> None:
+    """Télécharge le modèle depuis MinIO/S3 vers le chemin local."""
+    import boto3
+    from botocore.exceptions import BotoCoreError, ClientError
+
+    parts = s3_url.replace("s3://", "").split("/", 1)
+    bucket, key = parts[0], parts[1]
+    endpoint = os.getenv("AWS_S3_ENDPOINT_URL")
+    s3 = boto3.client("s3", endpoint_url=endpoint)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        s3.download_file(bucket, key, str(dest))
+        logger.info("Modèle téléchargé depuis %s", s3_url)
+    except (BotoCoreError, ClientError) as e:
+        logger.error("Échec téléchargement S3 : %s", e)
+
+
 @app.on_event("startup")
 def load_model():
-    """Charge le modèle au démarrage de l'API."""
+    """Charge le modèle au démarrage de l'API, en le téléchargeant depuis S3 si nécessaire."""
     global model
+    model_path = Path(MODEL_PATH)
+
+    if not model_path.exists():
+        s3_url = os.getenv("MODEL_S3_URL")
+        if s3_url:
+            logger.info("Modèle absent localement, téléchargement depuis %s", s3_url)
+            _download_model_from_s3(s3_url, model_path)
+
     try:
-        model = joblib.load(MODEL_PATH)
-        logger.info("Modèle chargé depuis %s", MODEL_PATH)
+        model = joblib.load(model_path)
+        logger.info("Modèle chargé depuis %s", model_path)
     except FileNotFoundError:
         logger.warning("! Modèle non trouvé à %s — l'API démarrera sans modèle.", MODEL_PATH)
 

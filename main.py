@@ -8,8 +8,10 @@ Usage
 
 import argparse
 import logging
+import os
 from pathlib import Path
 
+import boto3
 import joblib
 import mlflow
 import mlflow.sklearn
@@ -31,6 +33,19 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def _upload_model_to_s3(model_path: Path) -> None:
+    """Upload le modèle entraîné sur MinIO/S3."""
+    endpoint = os.getenv("AWS_S3_ENDPOINT_URL", "https://minio.lab.sspcloud.fr")
+    bucket = "edq"
+    key = "models/best_model.joblib"
+    try:
+        s3 = boto3.client("s3", endpoint_url=endpoint)
+        s3.upload_file(str(model_path), bucket, key)
+        logger.info("Modèle uploadé sur s3://%s/%s", bucket, key)
+    except Exception as e:
+        logger.warning("Upload S3 échoué (non bloquant) : %s", e)
+
+
 def _log_results(grid, x_train, x_test, y_train, y_test):
     """Log metrics, confusion matrix and persist the best estimator."""
     y_pred = grid.predict(x_test)
@@ -49,6 +64,7 @@ def _log_results(grid, x_train, x_test, y_train, y_test):
     model_path.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(grid.best_estimator_, model_path)
     mlflow.sklearn.log_model(grid.best_estimator_, "model")
+    _upload_model_to_s3(model_path)
     logger.info("LightGBM — terminé. Modèle sauvegardé dans %s", model_path)
 
 

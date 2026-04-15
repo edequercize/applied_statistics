@@ -28,5 +28,6 @@ jobs:
         with:
           context: .
           push: true
-          # REMPLACE 'ton_username' par ton vrai pseudo DockerHub ci-dessous
-          tags: ashxivy/applied_statistics:latest
+          tags: |
+            ashxivy/applied_statistics:latest
+            ashxivy/applied_statistics:${{ github.sha }}

@@ -10,8 +10,8 @@ spec:
     targetRevision: main
     path: deployment
   destination:
-    server: https://kubernetes.default.svc
-    namespace: default
+    server: https://apiserver.kub.sspcloud.fr
+    namespace: user-edq
   syncPolicy:
     automated:
       prune: true
