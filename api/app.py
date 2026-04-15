@@ -33,34 +33,29 @@ MODEL_PATH = os.getenv("MODEL_PATH", "models/best_model.joblib")
 model = None
 
 
-def _download_model_from_s3(s3_url: str, dest: Path) -> None:
-    """Télécharge le modèle depuis MinIO/S3 vers le chemin local."""
-    import boto3
-    from botocore.exceptions import BotoCoreError, ClientError
+def _download_model_from_url(url: str, dest: Path) -> None:
+    """Télécharge le modèle depuis une URL publique (HTTP/HTTPS)."""
+    import urllib.request
 
-    parts = s3_url.replace("s3://", "").split("/", 1)
-    bucket, key = parts[0], parts[1]
-    endpoint = os.getenv("AWS_S3_ENDPOINT_URL")
-    s3 = boto3.client("s3", endpoint_url=endpoint)
     dest.parent.mkdir(parents=True, exist_ok=True)
     try:
-        s3.download_file(bucket, key, str(dest))
-        logger.info("Modèle téléchargé depuis %s", s3_url)
-    except (BotoCoreError, ClientError) as e:
-        logger.error("Échec téléchargement S3 : %s", e)
+        urllib.request.urlretrieve(url, str(dest))
+        logger.info("Modèle téléchargé depuis %s", url)
+    except Exception as e:
+        logger.error("Échec téléchargement modèle : %s", e)
 
 
 @app.on_event("startup")
 def load_model():
-    """Charge le modèle au démarrage de l'API, en le téléchargeant depuis S3 si nécessaire."""
+    """Charge le modèle au démarrage de l'API, en le téléchargeant depuis l'URL publique si nécessaire."""
     global model
     model_path = Path(MODEL_PATH)
 
     if not model_path.exists():
-        s3_url = os.getenv("MODEL_S3_URL")
-        if s3_url:
-            logger.info("Modèle absent localement, téléchargement depuis %s", s3_url)
-            _download_model_from_s3(s3_url, model_path)
+        model_url = os.getenv("MODEL_URL")
+        if model_url:
+            logger.info("Modèle absent localement, téléchargement depuis %s", model_url)
+            _download_model_from_url(model_url, model_path)
 
     try:
         model = joblib.load(model_path)
