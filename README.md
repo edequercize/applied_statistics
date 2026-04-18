@@ -188,7 +188,7 @@ https://minio.lab.sspcloud.fr/edq/models/best_model.joblib
 |-------|-----|-------------|
 | API Health | [/health](https://obesity-api-test.lab.sspcloud.fr/health) | État du modèle |
 | Métriques Prometheus | [/metrics](https://obesity-api-test.lab.sspcloud.fr/metrics) | Latence, requêtes, mémoire |
-| Grafana | [user-edq-grafana.user.lab.sspcloud.fr](https://user-edq-grafana.user.lab.sspcloud.fr) | Dashboards de performance |
+| Grafana | [user-edq-grafana.user.lab.sspcloud.fr](https://user-edq-grafana.user.lab.sspcloud.fr) | Dashboards de performance | Obesity API — Monitoring
 
 ## Tests et qualité de code
 
@@ -199,6 +199,23 @@ pytest tests/
 # Linting et formatage
 ruff check src/ api/ tests/
 ruff format src/ api/ tests/
+```
+
+### Pre-commit hooks
+
+Le projet utilise [pre-commit](https://pre-commit.com/) pour exécuter ruff automatiquement avant chaque `git commit`.
+
+**Activation (à faire une seule fois après `git clone`) :**
+
+```bash
+pip install pre-commit
+pre-commit install
+```
+
+À partir de là, ruff vérifie et corrige le code à chaque commit. Pour lancer manuellement sur tous les fichiers :
+
+```bash
+pre-commit run --all-files
 ```
 
 ## Licence
