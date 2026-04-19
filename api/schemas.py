@@ -1,6 +1,6 @@
 """Schémas Pydantic pour l'API de prédiction."""
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class PatientFeatures(BaseModel):
@@ -31,6 +31,12 @@ class PredictionResponse(BaseModel):
 
 class HealthResponse(BaseModel):
     """Réponse du health check."""
-
     status: str = "ok"
     model_loaded: bool = True
+
+    model_config = ConfigDict(protected_namespaces=())  
+
+class HealthResponse(BaseModel):
+    """Réponse du health check."""
+    status: str = "ok"
+    is_model_loaded: bool = True 
