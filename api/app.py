@@ -70,7 +70,7 @@ def load_model():
 @app.get("/health", response_model=HealthResponse)
 def health():
     """Health check de l'API."""
-    return HealthResponse(status="ok", model_loaded=model is not None)
+    return HealthResponse(status="ok", is_model_loaded=model is not None)
 
 
 @app.post("/predict", response_model=PredictionResponse)

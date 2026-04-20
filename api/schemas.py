@@ -31,6 +31,5 @@ class PredictionResponse(BaseModel):
 
 class HealthResponse(BaseModel):
     """Réponse du health check."""
-
     status: str = "ok"
-    model_loaded: bool = True
+    is_model_loaded: bool = True
