@@ -2,7 +2,9 @@
 
 ## Contexte
 
-Ce projet vise à prédire le **niveau d'obésité** d'un individu à partir de ses habitudes alimentaires, de son activité physique et de caractéristiques démographiques. Les données proviennent du dataset [Obesity Levels (UCI)](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition).
+Ce projet est parti d'un notebook d'exploration (`repo_initial/main.ipynb`) dans lequel plusieurs modèles de classification étaient testés. Nous avons décidé de ne conserver qu'un seul modèle (LightGBM) et de suivre le parcours MLOps complet : bonnes pratiques de développement, fine-tuning reproductible via MLFlow, exposition via une API FastAPI, conteneurisation Docker, déploiement sur le SSP Cloud avec Kubernetes et ArgoCD, et monitoring en production.
+
+L'objectif est de prédire le **niveau d'obésité** d'un individu à partir de ses habitudes alimentaires, de son activité physique et de caractéristiques démographiques. Les données proviennent du dataset [Obesity Levels (UCI)](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition).
 
 Il s'agit d'un problème de **classification ordinale multi-classes** (7 niveaux) :
 
